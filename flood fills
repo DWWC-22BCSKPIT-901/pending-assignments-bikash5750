@@ -1,0 +1,38 @@
+#include <vector>
+#include <iostream>
+using namespace std;
+
+void dfs(vector<vector<int>>& image, int sr, int sc, int oldColor, int newColor) {
+    if (sr < 0 || sr >= image.size() || sc < 0 || sc >= image[0].size()) return;
+    if (image[sr][sc] != oldColor) return;
+    
+    image[sr][sc] = newColor;
+    
+    dfs(image, sr + 1, sc, oldColor, newColor);
+    dfs(image, sr - 1, sc, oldColor, newColor);
+    dfs(image, sr, sc + 1, oldColor, newColor);
+    dfs(image, sr, sc - 1, oldColor, newColor);
+}
+
+vector<vector<int>> floodFill(vector<vector<int>>& image, int sr, int sc, int color) {
+    int oldColor = image[sr][sc];
+    if (oldColor != color) {
+        dfs(image, sr, sc, oldColor, color);
+    }
+    return image;
+}
+
+int main() {
+    vector<vector<int>> image = {{1, 1, 1}, {1, 1, 0}, {1, 0, 1}};
+    vector<vector<int>> result = floodFill(image, 1, 1, 2);
+    
+    cout << "Flood Fill Result: " << endl;
+    for (auto& row : result) {
+        for (auto& val : row) {
+            cout << val << " ";
+        }
+        cout << endl;
+    }
+    return 0;
+}
+flood 
